@@ -1,38 +1,159 @@
-.App {
-  text-align: center;
+/* --- 1. GLOBAL RESET (THE FIX FOR HORIZONTAL SCROLL) --- */
+* {
+  box-sizing: border-box; /* Ensures padding doesn't add to width */
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+html, body {
+  width: 100%;
+  max-width: 100vw;       /* Forces body to never exceed screen width */
+  overflow-x: hidden;     /* BANISHES horizontal scrollbar */
+  margin: 0;
+  padding: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* --- 2. YOUR THEME STYLES --- */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap');
+
+:root {
+  --bg-dark: #0f172a;
+  --card-dark: #1e293b;
+  --accent: #8b5cf6;
+  --accent-hover: #7c3aed;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
 }
 
-.App-header {
-  background-color: #282c34;
+body {
+  font-family: 'Outfit', sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 20%),
+    radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.1) 0%, transparent 20%);
   min-height: 100vh;
+  /* Flexbox centers content vertically on Laptop, handles scroll on Mobile */
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  align-items: center; 
+}
+
+/* --- 3. THE CONTAINER (Responsive Card) --- */
+.container {
+  width: 100%;
+  max-width: 500px;
+  background: var(--card-dark);
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  text-align: center;
+  
+  /* Laptop Spacing */
+  margin-top: 50px;
+  padding: 40px;
+}
+
+/* --- 4. TYPOGRAPHY --- */
+h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  background: linear-gradient(90deg, #fff, #94a3b8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+p {
+  color: var(--text-muted);
+  margin-bottom: 25px;
+}
+
+/* --- 5. FORMS & INPUTS --- */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%; /* Ensure form stays inside container */
+}
+
+input, select {
+  width: 100%; /* Force input to fit container */
+  padding: 14px;
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 8px;
   color: white;
+  font-size: 1rem;
+  outline: none;
 }
 
-.App-link {
-  color: #61dafb;
+input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+/* --- 6. BUTTONS --- */
+button {
+  width: 100%; /* Force button to fit container */
+  padding: 14px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: var(--accent-hover);
+}
+
+/* --- 7. LINKS --- */
+a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* --- 8. QUIZ OPTIONS GRID --- */
+.options-grid-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 100%;
+}
+
+.option-btn {
+  background: #0f172a;
+  border: 1px solid #334155;
+  color: #e2e8f0;
+  text-align: left;
+  margin-bottom: 10px;
+  width: 100%; /* Fix width */
+  padding: 12px;
+}
+
+/* --- 9. MOBILE SPECIFIC RULES (The Fix for edges) --- */
+@media (max-width: 600px) {
+  body {
+    display: block; /* Remove flex centering on mobile to allow natural scroll */
+    padding: 20px 0; /* Add top/bottom spacing for scrolling */
   }
-  to {
-    transform: rotate(360deg);
+
+  .container {
+    /* Instead of fixed width, use percentage with margin */
+    width: 90%; 
+    margin: 0 auto; /* Centers the card horizontally */
+    padding: 20px;  /* Smaller padding inside the card */
+    margin-bottom: 30px; /* Space at bottom for scrolling */
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+  
+  /* Stack the Create Quiz inputs vertically on mobile */
+  .options-grid-form {
+    grid-template-columns: 1fr; 
   }
 }

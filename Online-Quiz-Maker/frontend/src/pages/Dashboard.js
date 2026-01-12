@@ -10,10 +10,30 @@ function Dashboard() {
   };
 
   return (
-    <div>
+    <div className="container">
       <h2>Dashboard</h2>
-      <p>Welcome! You are logged in.</p>
-      <button onClick={handleLogout}>Logout</button>
+      <p>Welcome! What would you like to do today?</p>
+      
+      <div style={{ margin: "20px 0" }}>
+        {/* Requirement: Option to create or take a quiz */}
+        <button 
+          onClick={() => navigate("/create-quiz")} 
+          style={{ marginRight: "10px", padding: "10px" }}
+        >
+          Create New Quiz
+        </button>
+
+        <button 
+          onClick={() => navigate("/quizzes")}
+          style={{ padding: "10px" }}
+        >
+          Take a Quiz
+        </button>
+      </div>
+
+      <button onClick={handleLogout} style={{ backgroundColor: "#f44336" }}>
+        Logout
+      </button>
     </div>
   );
 }

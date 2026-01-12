@@ -1,51 +1,128 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import API from "../services/api";
 
 function CreateQuiz() {
+  const navigate = useNavigate();
   const [title, setTitle] = useState("");
-  const [question, setQuestion] = useState("");
+  const [description, setDescription] = useState("");
+  
+  // State for the current question being added
+  const [questionText, setQuestionText] = useState("");
+  const [option1, setOption1] = useState("");
+  const [option2, setOption2] = useState("");
+  const [option3, setOption3] = useState("");
+  const [option4, setOption4] = useState("");
+  const [correctAnswer, setCorrectAnswer] = useState("");
 
-  const handleSubmit = async (e) => {
+  // Store all added questions here
+  const [questions, setQuestions] = useState([]);
+
+  const addQuestion = (e) => {
     e.preventDefault();
+    if (!questionText || !option1 || !option2 || !correctAnswer) {
+      alert("Please fill all fields for the question");
+      return;
+    }
 
-    const token = localStorage.getItem("token");
+    const newQuestion = {
+      questionText,
+      options: [option1, option2, option3, option4], // Store options as array
+      correctAnswer,
+    };
 
-    await API.post(
-      "/quizzes",
-      {
+    setQuestions([...questions, newQuestion]);
+    
+    // Clear form for next question
+    setQuestionText("");
+    setOption1("");
+    setOption2("");
+    setOption3("");
+    setOption4("");
+    setCorrectAnswer("");
+    alert("Question Added!");
+  };
+
+  const submitQuiz = async () => {
+    if (!title || questions.length === 0) {
+      alert("Please add a title and at least one question");
+      return;
+    }
+
+    try {
+      // We don't need to manually send the token header; API.js handles it!
+      await API.post("/quizzes", {
         title,
-        questions: [
-          {
-            questionText: question,
-            options: ["Option 1", "Option 2", "Option 3", "Option 4"],
-            correctAnswer: "Option 1",
-          },
-        ],
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-
-    alert("Quiz created");
+        description,
+        questions,
+      });
+      alert("Quiz Created Successfully!");
+      navigate("/dashboard");
+    } catch (error) {
+      alert("Failed to create quiz");
+    }
   };
 
   return (
-    <div>
-      <h2>Create Quiz</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          placeholder="Quiz Title"
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <input
-          placeholder="Question"
-          onChange={(e) => setQuestion(e.target.value)}
-        />
-        <button type="submit">Create</button>
-      </form>
+    <div className="container">
+      <h2>Create a New Quiz</h2>
+      
+      {/* SECTION 1: Quiz Info */}
+      <input
+        placeholder="Quiz Title"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        style={{ display: "block", marginBottom: "10px", width: "100%" }}
+      />
+      <input
+        placeholder="Description (Optional)"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        style={{ display: "block", marginBottom: "20px", width: "100%" }}
+      />
+
+      <hr />
+
+      {/* SECTION 2: Add Questions */}
+      <h3>Add Question ({questions.length} added so far)</h3>
+      
+      <input
+        placeholder="Question Text (e.g., What is 2+2?)"
+        value={questionText}
+        onChange={(e) => setQuestionText(e.target.value)}
+        style={{ width: "100%", marginBottom: "10px" }}
+      />
+      
+      <div className="options-grid-form">
+        <input placeholder="Option A" value={option1} onChange={(e) => setOption1(e.target.value)} />
+        <input placeholder="Option B" value={option2} onChange={(e) => setOption2(e.target.value)} />
+        <input placeholder="Option C" value={option3} onChange={(e) => setOption3(e.target.value)} />
+        <input placeholder="Option D" value={option4} onChange={(e) => setOption4(e.target.value)} />
+      </div>
+
+      <p>Correct Answer:</p>
+      <select 
+        value={correctAnswer} 
+        onChange={(e) => setCorrectAnswer(e.target.value)}
+        style={{ marginBottom: "10px", padding: "5px" }}
+      >
+        <option value="">Select Correct Option</option>
+        <option value={option1}>Option A</option>
+        <option value={option2}>Option B</option>
+        <option value={option3}>Option C</option>
+        <option value={option4}>Option D</option>
+      </select>
+
+      <button onClick={addQuestion} style={{ display: "block", marginBottom: "20px" }}>
+        Add Question to List
+      </button>
+
+      <hr />
+
+      {/* SECTION 3: Submit Everything */}
+      <button onClick={submitQuiz} style={{ backgroundColor: "#4CAF50", width: "100%" }}>
+        PUBLISH QUIZ
+      </button>
     </div>
   );
 }
