@@ -23,6 +23,20 @@ function Register() {
   return (
     
     <div className="container" style={{ marginTop: "50px" }}>
+
+      <div style={{ marginBottom: "30px" }}>
+        <span style={{ fontSize: "3rem", display: "block" }}>⚡</span>
+        <h1 style={{ 
+          margin: "0", 
+          background: "linear-gradient(90deg, #8b5cf6, #3b82f6)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          fontSize: "2rem"
+        }}>
+          Quiz Master Pro
+        </h1>
+      </div>
+
       <h2>Create Account</h2>
       <p style={{ color: "#94a3b8", marginBottom: "20px" }}>Join us to create and take quizzes</p>
       
@@ -31,6 +45,9 @@ function Register() {
         <input name="email" type="email" placeholder="Email Address" onChange={handleChange} required />
         <input name="password" type="password" placeholder="Password" onChange={handleChange} required />
         <button type="submit">Register</button>
+        <p style={{ marginTop: "30px", fontSize: "0.8rem", color: "#64748b" }}>
+          Built by Prashant More
+        </p>
       </form>
       
       <p style={{ marginTop: "20px" }}>

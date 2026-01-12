@@ -8,6 +8,9 @@ function TakeQuiz() {
   const [quiz, setQuiz] = useState(null);
   const [current, setCurrent] = useState(0);
   const [score, setScore] = useState(0);
+  
+  const [answerHistory, setAnswerHistory] = useState([]);
+  const optionLabels = ["A", "B", "C", "D"];
 
   useEffect(() => {
     const fetchQuiz = async () => {
@@ -25,12 +28,23 @@ function TakeQuiz() {
 
   const handleAnswer = (selectedOption) => {
     const currentQuestion = quiz.questions[current];
+    const isCorrect = selectedOption === currentQuestion.correctAnswer;
+    
     let newScore = score;
-
-    if (selectedOption === currentQuestion.correctAnswer) {
+    if (isCorrect) {
       newScore = score + 1;
     }
     setScore(newScore);
+
+    const newHistoryItem = {
+      question: currentQuestion.questionText,
+      selected: selectedOption,
+      correct: currentQuestion.correctAnswer,
+      isCorrect: isCorrect
+    };
+    
+    const updatedHistory = [...answerHistory, newHistoryItem];
+    setAnswerHistory(updatedHistory);
 
     if (current + 1 < quiz.questions.length) {
       setCurrent(current + 1);
@@ -39,6 +53,7 @@ function TakeQuiz() {
         state: {
           score: newScore,
           total: quiz.questions.length,
+          history: updatedHistory 
         },
       });
     }
@@ -46,22 +61,36 @@ function TakeQuiz() {
 
   return (
     <div className="container">
-      <h2>{quiz.title}</h2>
-      <p>
-        Question {current + 1} / {quiz.questions.length}
-      </p>
+      <h2 style={{color: '#fff'}}>{quiz.title}</h2>
+      <p>Question {current + 1} / {quiz.questions.length}</p>
 
-      <div className="card">
-        <h3>{quiz.questions[current].questionText}</h3>
+      <div className="card" style={{background: 'transparent', boxShadow: 'none', padding: 0}}>
+        <h3 style={{marginBottom: '20px'}}>{quiz.questions[current].questionText}</h3>
         
-        <div className="options-grid">
+        <div className="options-vertical-list">
           {quiz.questions[current].options.map((opt, i) => (
             <button
               key={i}
               className="option-btn"
               onClick={() => handleAnswer(opt)}
+              style={{ display: "flex", alignItems: "center" }} 
             >
-              {opt}
+              <span style={{ 
+                  fontWeight: "bold", 
+                  marginRight: "15px", 
+                  color: "#8b5cf6", 
+                  background: "rgba(139, 92, 246, 0.1)", 
+                  width: "30px",
+                  height: "30px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  borderRadius: "50%",
+                  flexShrink: 0 
+              }}>
+                {optionLabels[i] || i + 1}
+              </span>
+              <span>{opt}</span>
             </button>
           ))}
         </div>
