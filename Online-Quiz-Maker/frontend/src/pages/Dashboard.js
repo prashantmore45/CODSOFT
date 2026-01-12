@@ -15,7 +15,6 @@ function Dashboard() {
       <p>Welcome! What would you like to do today?</p>
       
       <div style={{ margin: "20px 0" }}>
-        {/* Requirement: Option to create or take a quiz */}
         <button 
           onClick={() => navigate("/create-quiz")} 
           style={{ marginRight: "10px", padding: "10px" }}

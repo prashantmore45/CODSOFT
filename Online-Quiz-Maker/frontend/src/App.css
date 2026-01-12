@@ -1,17 +1,19 @@
-/* --- 1. GLOBAL RESET (THE FIX FOR HORIZONTAL SCROLL) --- */
+/* --- GLOBAL RESET --- */
+
 * {
-  box-sizing: border-box; /* Ensures padding doesn't add to width */
+  box-sizing: border-box; 
 }
 
 html, body {
   width: 100%;
-  max-width: 100vw;       /* Forces body to never exceed screen width */
-  overflow-x: hidden;     /* BANISHES horizontal scrollbar */
+  max-width: 100vw;      
+  overflow-x: hidden;    
   margin: 0;
   padding: 0;
 }
 
-/* --- 2. YOUR THEME STYLES --- */
+/* --- THEME STYLES --- */
+
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap');
 
 :root {
@@ -31,13 +33,13 @@ body {
     radial-gradient(circle at 10% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 20%),
     radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.1) 0%, transparent 20%);
   min-height: 100vh;
-  /* Flexbox centers content vertically on Laptop, handles scroll on Mobile */
   display: flex;
   flex-direction: column;
   align-items: center; 
 }
 
-/* --- 3. THE CONTAINER (Responsive Card) --- */
+/* --- THE CONTAINER (Responsive Card) --- */
+
 .container {
   width: 100%;
   max-width: 500px;
@@ -46,13 +48,12 @@ body {
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.05);
   text-align: center;
-  
-  /* Laptop Spacing */
   margin-top: 50px;
   padding: 40px;
 }
 
-/* --- 4. TYPOGRAPHY --- */
+/* --- TYPOGRAPHY --- */
+
 h2 {
   font-size: 2rem;
   margin-bottom: 10px;
@@ -66,16 +67,17 @@ p {
   margin-bottom: 25px;
 }
 
-/* --- 5. FORMS & INPUTS --- */
+/* --- FORMS & INPUTS --- */
+
 form {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  width: 100%; /* Ensure form stays inside container */
+  width: 100%; 
 }
 
 input, select {
-  width: 100%; /* Force input to fit container */
+  width: 100%; 
   padding: 14px;
   background: #0f172a;
   border: 1px solid #334155;
@@ -90,9 +92,10 @@ input:focus {
   box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
 }
 
-/* --- 6. BUTTONS --- */
+/* --- BUTTONS --- */
+
 button {
-  width: 100%; /* Force button to fit container */
+  width: 100%; 
   padding: 14px;
   background: var(--accent);
   color: white;
@@ -108,14 +111,16 @@ button:hover {
   background-color: var(--accent-hover);
 }
 
-/* --- 7. LINKS --- */
+/* --- LINKS --- */
+
 a {
   color: var(--accent);
   text-decoration: none;
   font-weight: 500;
 }
 
-/* --- 8. QUIZ OPTIONS GRID --- */
+/* --- QUIZ OPTIONS GRID --- */
+
 .options-grid-form {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -129,31 +134,76 @@ a {
   color: #e2e8f0;
   text-align: left;
   margin-bottom: 10px;
-  width: 100%; /* Fix width */
+  width: 100%; 
   padding: 12px;
 }
 
-/* --- 9. MOBILE SPECIFIC RULES (The Fix for edges) --- */
+/* --- QUIZ LIST GRID LAYOUT --- */
+
+.quiz-list-container {
+  max-width: 1200px; 
+  width: 90%; 
+}
+
+.quiz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+  gap: 25px;
+  margin-top: 20px;
+}
+
+.quiz-card {
+  background: #0f172a; 
+  border: 1px solid #334155;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: left;
+  transition: transform 0.2s;
+  height: 100%; 
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.quiz-card h3 {
+  margin-top: 0;
+  color: #fff;
+}
+
+.quiz-card:hover {
+  transform: translateY(-5px); 
+  border-color: #8b5cf6; 
+}
+
+/* --- MOBILE RESPONSIVENESS --- */
+
 @media (max-width: 600px) {
   body {
-    display: block; /* Remove flex centering on mobile to allow natural scroll */
-    padding: 20px 0; /* Add top/bottom spacing for scrolling */
+    display: block; 
+    padding: 20px 0; 
   }
 
   .container {
-    /* Instead of fixed width, use percentage with margin */
     width: 90%; 
-    margin: 0 auto; /* Centers the card horizontally */
-    padding: 20px;  /* Smaller padding inside the card */
-    margin-bottom: 30px; /* Space at bottom for scrolling */
+    margin: 0 auto; 
+    padding: 20px;  
+    margin-bottom: 30px; 
   }
 
   h2 {
     font-size: 1.5rem;
   }
   
-  /* Stack the Create Quiz inputs vertically on mobile */
   .options-grid-form {
+    grid-template-columns: 1fr; 
+  }
+
+  .quiz-list-container {
+    width: 90%;
+    max-width: 500px; 
+  }
+  
+  .quiz-grid {
     grid-template-columns: 1fr; 
   }
 }

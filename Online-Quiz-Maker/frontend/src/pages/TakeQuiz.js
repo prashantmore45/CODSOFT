@@ -12,7 +12,6 @@ function TakeQuiz() {
   useEffect(() => {
     const fetchQuiz = async () => {
       try {
-        // ✅ No need for manual headers
         const res = await API.get(`/quizzes/${id}`);
         setQuiz(res.data);
       } catch (error) {
@@ -28,17 +27,14 @@ function TakeQuiz() {
     const currentQuestion = quiz.questions[current];
     let newScore = score;
 
-    // 1. Calculate the new score immediately
     if (selectedOption === currentQuestion.correctAnswer) {
       newScore = score + 1;
     }
     setScore(newScore);
 
-    // 2. Decide: Next Question or Finish?
     if (current + 1 < quiz.questions.length) {
       setCurrent(current + 1);
     } else {
-      // ✅ Pass the ACCURATE 'newScore', not the old 'score'
       navigate("/result", {
         state: {
           score: newScore,
