@@ -9,6 +9,8 @@ import ApplicationsList from "./pages/ApplicationsList";
 import Home from "./pages/Home";
 import ProtectedRoute from "./components/ProtectedRoute";
 import MyApplications from "./pages/MyApplications"; 
+import Profile from "./pages/Profile";
+
 
 function App() {
   return (
@@ -41,8 +43,7 @@ function App() {
           <Route
             path="/post-job"
             element={
-              <ProtectedRoute>
-                <EmployerDashboard /> 
+              <ProtectedRoute> 
                 <PostJob />
               </ProtectedRoute>
             }
@@ -74,7 +75,16 @@ function App() {
               </ProtectedRoute>
             }
           />
-          
+
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
+
         </Routes>
       </div>
     </Router>

@@ -29,7 +29,7 @@ function PostJob() {
   };
 
   return (
-    <div className="container" style={{ width: "500px" }}>
+    <div className="container" style={{ width: "500px", textAlign: "left", marginTop: "20px",  }}>
       <h2>Post a New Job</h2>
       <form onSubmit={handleSubmit}>
         <input name="title" placeholder="Job Title (e.g. React Dev)" onChange={handleChange} required />

@@ -43,6 +43,12 @@ function CandidateDashboard() {
 
             <span>Hello, {user?.name} </span>
             <button onClick={handleLogout} style={{ width: "auto", background: "#dc3545", padding: "5px 10px", marginLeft: "10px" }}>Logout</button>
+            <button 
+              onClick={() => navigate("/profile")} 
+              style={{ width: "auto", background: "#6610f2", padding: "5px 15px", marginRight: "10px", marginLeft: "10px" }}
+            >
+              👤 Profile
+            </button>
         </div>
       </div>
 
