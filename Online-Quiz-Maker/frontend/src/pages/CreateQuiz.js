@@ -7,7 +7,6 @@ function CreateQuiz() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   
-  // State for the current question being added
   const [questionText, setQuestionText] = useState("");
   const [option1, setOption1] = useState("");
   const [option2, setOption2] = useState("");
@@ -15,7 +14,6 @@ function CreateQuiz() {
   const [option4, setOption4] = useState("");
   const [correctAnswer, setCorrectAnswer] = useState("");
 
-  // Store all added questions here
   const [questions, setQuestions] = useState([]);
 
   const addQuestion = (e) => {
@@ -27,13 +25,12 @@ function CreateQuiz() {
 
     const newQuestion = {
       questionText,
-      options: [option1, option2, option3, option4], // Store options as array
+      options: [option1, option2, option3, option4], 
       correctAnswer,
     };
 
     setQuestions([...questions, newQuestion]);
     
-    // Clear form for next question
     setQuestionText("");
     setOption1("");
     setOption2("");
@@ -50,7 +47,6 @@ function CreateQuiz() {
     }
 
     try {
-      // We don't need to manually send the token header; API.js handles it!
       await API.post("/quizzes", {
         title,
         description,
@@ -64,10 +60,9 @@ function CreateQuiz() {
   };
 
   return (
-    <div className="container">
-      <h2>Create a New Quiz</h2>
+    <div className="container" style={{ maxWidth: "600px", marginTop: "50px", marginBottom: "50px" }}>
+      <h2 style={{ marginTop: "10px", marginBottom: "30px" }}>Create a New Quiz</h2>
       
-      {/* SECTION 1: Quiz Info */}
       <input
         placeholder="Quiz Title"
         value={title}
@@ -83,7 +78,6 @@ function CreateQuiz() {
 
       <hr />
 
-      {/* SECTION 2: Add Questions */}
       <h3>Add Question ({questions.length} added so far)</h3>
       
       <input

@@ -21,7 +21,7 @@ function Login() {
 
   return (
     
-    <div className="container" style={{ marginTop: "50px" }}>
+    <div className="container" style={{ marginTop: "50px", width: "400px" }}>
 
       <div style={{ marginBottom: "30px" }}>
         <span style={{ fontSize: "3rem", display: "block" }}>⚡</span>

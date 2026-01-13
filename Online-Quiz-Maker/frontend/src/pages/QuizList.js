@@ -18,8 +18,8 @@ function QuizList() {
   }, []);
 
   return (
-    <div className="container quiz-list-container">
-      <h2>Available Quizzes</h2>
+    <div className="container quiz-list-container" style={{ marginBottom: "50px" }}>
+      <h2 style={{ marginBottom: "50px" }}>Available Quizzes</h2>
       
       {quizzes.length === 0 ? <p>No quizzes available yet.</p> : null}
 

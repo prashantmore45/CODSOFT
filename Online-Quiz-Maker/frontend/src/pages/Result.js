@@ -15,7 +15,7 @@ function Result() {
   }
 
   return (
-    <div className="container" style={{ maxWidth: "800px", marginTop: "50px" }}>
+    <div className="container" style={{ maxWidth: "800px", marginTop: "50px", marginBottom: "50px" }}>
       <h2>Quiz Completed 🎉</h2>
       
       <div style={{ marginBottom: "30px", padding: "20px", borderBottom: "1px solid #334155" }}>

@@ -22,7 +22,7 @@ function Register() {
 
   return (
     
-    <div className="container" style={{ marginTop: "50px" }}>
+    <div className="container" style={{ marginTop: "50px", width: "450px", marginBottom: "50px" }}>
 
       <div style={{ marginBottom: "30px" }}>
         <span style={{ fontSize: "3rem", display: "block" }}>⚡</span>
