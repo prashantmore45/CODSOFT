@@ -7,7 +7,8 @@ import PostJob from "./pages/PostJob";
 import JobDetails from "./pages/JobDetails";
 import ApplicationsList from "./pages/ApplicationsList";
 import Home from "./pages/Home";
-import ProtectedRoute from "./components/ProtectedRoute"; 
+import ProtectedRoute from "./components/ProtectedRoute";
+import MyApplications from "./pages/MyApplications"; 
 
 function App() {
   return (
@@ -64,6 +65,16 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+          <Route
+            path="/my-applications"
+            element={
+              <ProtectedRoute>
+                <MyApplications />
+              </ProtectedRoute>
+            }
+          />
+          
         </Routes>
       </div>
     </Router>

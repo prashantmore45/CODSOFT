@@ -34,6 +34,13 @@ function CandidateDashboard() {
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
         <h2>Job Feed</h2>
         <div style={{ textAlign: "right" }}>
+            <button 
+              onClick={() => navigate("/my-applications")} 
+              style={{ width: "auto", background: "#17a2b8", padding: "5px 15px", marginRight: "10px" }}
+            >
+              📂 My Applications
+            </button>
+
             <span>Hello, {user?.name} </span>
             <button onClick={handleLogout} style={{ width: "auto", background: "#dc3545", padding: "5px 10px", marginLeft: "10px" }}>Logout</button>
         </div>
