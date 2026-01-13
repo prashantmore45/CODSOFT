@@ -1,23 +1,28 @@
 import { useEffect, useState } from "react";
 import API from "../services/api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 function CandidateDashboard() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [jobs, setJobs] = useState([]);
   const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const res = await API.get("/jobs");
+
+        const keyword = searchParams.get("keyword") || "";
+        const location = searchParams.get("location") || "";
+
+        const res = await API.get(`/jobs?keyword=${keyword}&location=${location}`);
         setJobs(res.data);
       } catch (error) {
         console.error("Failed to fetch jobs");
       }
     };
     fetchJobs();
-  }, []);
+  }, [searchParams]);
 
   const handleLogout = () => {
     localStorage.clear();
@@ -34,7 +39,13 @@ function CandidateDashboard() {
         </div>
       </div>
 
-      {jobs.length === 0 ? <p>No jobs available right now.</p> : null}
+      {(searchParams.get("keyword") || searchParams.get("location")) && (
+        <button onClick={() => navigate("/candidate-dashboard")} style={{ marginBottom: "20px", background: "#6c757d" }}>
+          ❌ Clear Search Filters
+        </button>
+      )}
+
+      {jobs.length === 0 ? <p>No jobs found matching your search.</p> : null}
 
       <div style={{ display: "grid", gap: "15px" }}>
         {jobs.map((job) => (

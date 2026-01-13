@@ -1,18 +1,30 @@
 const Job = require("../models/Job");
 
-// @desc    Fetch all jobs
-// @route   GET /api/jobs
+/* Fetch jobs with search (optional) & @route   GET /api/jobs?keyword=React&location=Remote */
 const getJobs = async (req, res) => {
   try {
-    const jobs = await Job.find().sort({ createdAt: -1 }); 
+    const { keyword, location } = req.query;
+
+    let query = {};
+
+    if (keyword) {
+      query.title = { $regex: keyword, $options: "i" }; 
+    }
+
+    if (location) {
+      query.location = { $regex: location, $options: "i" };
+    }
+
+    const jobs = await Job.find(query).sort({ createdAt: -1 });
+    
     res.json(jobs);
   } catch (error) {
     res.status(500).json({ message: "Server Error" });
   }
 };
 
-// @desc    Get single job details
-// @route   GET /api/jobs/:id
+/* Get single job details & @route   GET /api/jobs/:id */
+
 const getJobById = async (req, res) => {
   try {
     const job = await Job.findById(req.params.id).populate("postedBy", "name email");
@@ -26,12 +38,11 @@ const getJobById = async (req, res) => {
   }
 };
 
-// @desc    Create a new job (Employer only)
-// @route   POST /api/jobs
+/* Create a new job (Employer only) & @route   POST /api/jobs */
+
 const createJob = async (req, res) => {
   const { title, company, location, description, salary, type } = req.body;
 
-  // Security Check: Is the user an Employer?
   if (req.user.role !== 'employer') {
     return res.status(403).json({ message: "Access denied. Only Employers can post jobs." });
   }
@@ -44,7 +55,7 @@ const createJob = async (req, res) => {
       description,
       salary,
       type,
-      postedBy: req.user._id // Link to logged-in user
+      postedBy: req.user._id 
     });
 
     const createdJob = await job.save();
