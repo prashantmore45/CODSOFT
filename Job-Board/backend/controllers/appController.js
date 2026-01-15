@@ -1,15 +1,16 @@
 const Application = require("../models/Application");
+const Job = require("../models/Job"); 
+const User = require("../models/User"); 
+const sendEmail = require("../utils/emailService"); 
 
-/* Apply for a job (Candidate only) * @route   POST /api/application/:jobId */
+// Apply for a job (Candidate only)
 
 const applyForJob = async (req, res) => {
-
   if (req.user.role !== 'candidate') {
-    return res.status(403).json({ message: "Only Candidates can apply for jobs." });
+    return res.status(403).json({ message: "Only Candidates can apply." });
   }
-
   if (!req.file) {
-    return res.status(400).json({ message: "Please upload a resume (PDF)." });
+    return res.status(400).json({ message: "Please upload a resume." });
   }
 
   try {
@@ -17,17 +18,28 @@ const applyForJob = async (req, res) => {
 
     const existingApp = await Application.findOne({ job: jobId, applicant: req.user._id });
     if (existingApp) {
-      return res.status(400).json({ message: "You have already applied for this job." });
+      return res.status(400).json({ message: "You have already applied." });
     }
 
     const application = await Application.create({
       job: jobId,
       applicant: req.user._id,
-      resume: req.file.path 
+      resume: req.file.path
     });
+  
+    const jobDetails = await Job.findById(jobId).populate("postedBy", "email name");
+    
+    if (jobDetails && jobDetails.postedBy) {
+      const employerEmail = jobDetails.postedBy.email;
+      const subject = `New Application for ${jobDetails.title}`;
+      const message = `Hello ${jobDetails.postedBy.name},\n\nA new candidate (${req.user.name}) has just applied for your job post: "${jobDetails.title}".\n\nLogin to your dashboard to review their resume.\n\nBest,\nJob Board Team`;
+
+      sendEmail(employerEmail, subject, message);
+    }
 
     res.status(201).json({ message: "Application successful", application });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: "Application failed" });
   }
 };
