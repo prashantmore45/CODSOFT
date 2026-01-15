@@ -29,14 +29,16 @@ function Login() {
   };
 
   return (
-    <div className="container">
-      <h2>Welcome Back</h2>
+    <div className="form-box">
+      <h2 style={{textAlign: "center", marginBottom: "20px"}}>Welcome Back</h2>
       <form onSubmit={handleSubmit}>
         <input name="email" type="email" placeholder="Email" onChange={handleChange} required />
         <input name="password" type="password" placeholder="Password" onChange={handleChange} required />
-        <button type="submit">Login</button>
+        <button type="submit" style={{background: "#007bff", color: "white"}}>Login</button>
       </form>
-      <p>New here? <Link to="/register">Create an Account</Link></p>
+      <p style={{marginTop: "15px", textAlign: "center"}}>
+        New here? <Link to="/register">Create an Account</Link>
+      </p>
     </div>
   );
 }

@@ -35,10 +35,10 @@ function Profile() {
   };
 
   return (
-    <div className="container" style={{ width: "400px" }}>
-       <button onClick={() => navigate(-1)} style={{ background: "#6c757d", width: "auto", marginBottom: "20px" }}>← Back</button>
+    <div className="form-box">
+      <button onClick={() => navigate(-1)} style={{ background: "transparent", color: "#6c757d", border: "1px solid #6c757d", width: "auto", padding: "5px 10px", marginBottom: "20px" }}>← Back</button>
       
-      <h2>Edit Profile</h2>
+      <h2 style={{ textAlign: "center", marginBottom: "20px" }}>Edit Profile</h2>
       <form onSubmit={handleSubmit}>
         <label style={{ textAlign: "left", display: "block", marginBottom: "5px" }}>Full Name</label>
         <input 

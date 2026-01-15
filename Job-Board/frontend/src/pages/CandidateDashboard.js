@@ -6,7 +6,6 @@ function CandidateDashboard() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [jobs, setJobs] = useState([]);
-  const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -24,58 +23,40 @@ function CandidateDashboard() {
     fetchJobs();
   }, [searchParams]);
 
-  const handleLogout = () => {
-    localStorage.clear();
-    navigate("/login");
-  };
-
   return (
-    <div className="container" style={{ width: "800px" }}>
+    <div>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
         <h2>Job Feed</h2>
-        <div style={{ textAlign: "right" }}>
-            <button 
-              onClick={() => navigate("/my-applications")} 
-              style={{ width: "auto", background: "#17a2b8", padding: "5px 15px", marginRight: "10px" }}
-            >
-              📂 My Applications
-            </button>
-
-            <span>Hello, {user?.name} </span>
-            <button onClick={handleLogout} style={{ width: "auto", background: "#dc3545", padding: "5px 10px", marginLeft: "10px" }}>Logout</button>
-            <button 
-              onClick={() => navigate("/profile")} 
-              style={{ width: "auto", background: "#6610f2", padding: "5px 15px", marginRight: "10px", marginLeft: "10px" }}
-            >
-              👤 Profile
-            </button>
-        </div>
+        
+        <button 
+          onClick={() => navigate("/my-applications")} 
+          style={{ width: "auto", background: "#17a2b8", color: "white", padding: "10px 20px" }}
+        >
+          📂 My Applications
+        </button>
       </div>
 
       {(searchParams.get("keyword") || searchParams.get("location")) && (
-        <button onClick={() => navigate("/candidate-dashboard")} style={{ marginBottom: "20px", background: "#6c757d" }}>
+        <button onClick={() => navigate("/candidate-dashboard")} style={{ width: "auto", marginBottom: "20px", background: "#6c757d", color: "white" }}>
           ❌ Clear Search Filters
         </button>
       )}
 
       {jobs.length === 0 ? <p>No jobs found matching your search.</p> : null}
 
-      <div style={{ display: "grid", gap: "15px" }}>
+      <div className="job-grid">
         {jobs.map((job) => (
-          <div key={job._id} style={{ 
-            border: "1px solid #ddd", 
-            padding: "20px", 
-            borderRadius: "8px", 
-            textAlign: "left",
-            background: "#f9f9f9"
-          }}>
-            <h3 style={{ margin: "0 0 5px 0", color: "#007bff" }}>{job.title}</h3>
-            <p style={{ margin: "5px 0", fontWeight: "bold" }}>{job.company} — {job.location}</p>
-            <p style={{ margin: "5px 0", color: "#555" }}>💰 {job.salary} ({job.type})</p>
+          <div key={job._id} className="card">
+            <div>
+              <h3 style={{ margin: "0 0 5px 0", color: "#007bff" }}>{job.title}</h3>
+              <p style={{ margin: "5px 0", fontWeight: "bold" }}>{job.company}</p>
+              <p style={{ margin: "0", color: "#555" }}>📍 {job.location}</p>
+              <p style={{ margin: "5px 0", color: "#28a745", fontWeight: "bold" }}>💰 {job.salary}</p>
+            </div>
             
             <button 
                 onClick={() => navigate(`/job/${job._id}`)}
-                style={{ width: "150px", marginTop: "10px", background: "#28a745" }}
+                style={{ marginTop: "15px", background: "#007bff", color: "white" }}
             >
                 View & Apply
             </button>

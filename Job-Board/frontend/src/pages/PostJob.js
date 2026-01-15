@@ -19,7 +19,6 @@ function PostJob() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // The token in API.js handles the "Who am I?" part automatically
       await API.post("/jobs", formData);
       alert("Job Posted Successfully!");
       navigate("/employer-dashboard");
@@ -29,8 +28,8 @@ function PostJob() {
   };
 
   return (
-    <div className="container" style={{ width: "500px", textAlign: "left", marginTop: "20px",  }}>
-      <h2>Post a New Job</h2>
+    <div className="form-box" style={{ margin: "0 auto" }}>
+      <h2 style={{ textAlign: "center", marginBottom: "20px" }}>Post a New Job</h2>
       <form onSubmit={handleSubmit}>
         <input name="title" placeholder="Job Title (e.g. React Dev)" onChange={handleChange} required />
         <input name="company" placeholder="Company Name" onChange={handleChange} required />
@@ -49,11 +48,10 @@ function PostJob() {
           onChange={handleChange} 
           rows="5"
           required
-          style={{ width: "100%", padding: "10px", margin: "10px 0", borderRadius: "4px", borderColor: "#ddd" }}
         />
 
-        <button type="submit">Post Job</button>
-        <button type="button" onClick={() => navigate("/employer-dashboard")} style={{ background: "#6c757d", marginTop: "10px" }}>Cancel</button>
+        <button type="submit" style={{ background: "#28a745", color: "white" }}>Post Job</button>
+        <button type="button" onClick={() => navigate("/employer-dashboard")} style={{ background: "#6c757d", color: "white", marginTop: "10px" }}>Cancel</button>
       </form>
     </div>
   );

@@ -1,15 +1,23 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import API from "../services/api";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 
 function Register() {
   const navigate = useNavigate();
+  const location = useLocation();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
     role: "candidate", 
   });
+
+  useEffect(() => {
+    if (location.state && location.state.role) {
+      setFormData((prev) => ({ ...prev, role: location.state.role }));
+    }
+  }, [location.state]);
 
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -26,24 +34,26 @@ function Register() {
   };
 
   return (
-    <div className="container">
-      <h2>Create Account</h2>
+    <div className="form-box">
+      <h2 style={{textAlign: "center", marginBottom: "20px"}}>Create Account</h2>
       <form onSubmit={handleSubmit}>
         <input name="name" placeholder="Full Name" onChange={handleChange} required />
         <input name="email" type="email" placeholder="Email" onChange={handleChange} required />
         <input name="password" type="password" placeholder="Password" onChange={handleChange} required />
         
-        <div style={{ margin: "10px 0" }}>
-          <label style={{ marginRight: "10px" }}>I am a:</label>
-          <select name="role" value={formData.role} onChange={handleChange} style={{ padding: "5px" }}>
+        <div style={{ margin: "15px 0" }}>
+          <label style={{ display: "block", marginBottom: "5px" }}>I am a:</label>
+          <select name="role" value={formData.role} onChange={handleChange}>
             <option value="candidate">Job Seeker (Candidate)</option>
             <option value="employer">Employer (Hiring)</option>
           </select>
         </div>
 
-        <button type="submit">Register</button>
+        <button type="submit" style={{background: "#007bff", color: "white"}}>Register</button>
       </form>
-      <p>Already have an account? <Link to="/login">Login</Link></p>
+      <p style={{marginTop: "15px", textAlign: "center"}}>
+        Already have an account? <Link to="/login">Login</Link>
+      </p>
     </div>
   );
 }

@@ -20,28 +20,20 @@ function ApplicationsList() {
   }, [jobId]);
 
   return (
-    <div className="container" style={{ width: "800px" }}>
-      <button onClick={() => navigate("/employer-dashboard")} style={{ background: "#6c757d", width: "auto", marginBottom: "20px" }}>← Back to Dashboard</button>
+    <div>
+      <button onClick={() => navigate("/employer-dashboard")} style={{ background: "#6c757d", color: "white", width: "auto", marginBottom: "20px" }}>← Back to Dashboard</button>
       
-      <h2>Applicants for this Job</h2>
+      <h2 style={{ marginBottom: "20px" }}>Applicants for this Job</h2>
       
       {applications.length === 0 ? <p>No applications yet.</p> : null}
 
-      <div style={{ display: "grid", gap: "15px" }}>
+      <div className="job-grid">
         {applications.map((app) => (
-          <div key={app._id} style={{ 
-            border: "1px solid #ddd", 
-            padding: "15px", 
-            borderRadius: "8px", 
-            display: "flex", 
-            justifyContent: "space-between",
-            alignItems: "center",
-            background: "#fff"
-          }}>
+          <div key={app._id} className="card">
             <div>
               <h3 style={{ margin: "0", color: "#333" }}>{app.applicant.name}</h3>
               <p style={{ margin: "5px 0", color: "#666" }}>{app.applicant.email}</p>
-              <small style={{ color: "#999" }}>Applied on: {new Date(app.createdAt).toLocaleDateString()}</small>
+              <small style={{ color: "#999" }}>Applied: {new Date(app.createdAt).toLocaleDateString()}</small>
             </div>
 
             <a 
@@ -49,10 +41,13 @@ function ApplicationsList() {
               target="_blank" 
               rel="noopener noreferrer"
               style={{
+                display: "block",
+                textAlign: "center",
+                marginTop: "15px",
                 textDecoration: "none",
                 background: "#007bff",
                 color: "white",
-                padding: "10px 15px",
+                padding: "10px",
                 borderRadius: "5px",
                 fontWeight: "bold"
               }}

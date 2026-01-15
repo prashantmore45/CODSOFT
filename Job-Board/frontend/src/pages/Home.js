@@ -25,53 +25,56 @@ function Home() {
   };
 
   return (
-    <div style={{ width: "100%", textAlign: "center" }}>
-      
-      <div style={{ 
-        background: "linear-gradient(135deg, #007bff, #6610f2)", 
-        color: "white", 
-        padding: "80px 20px",
-        marginBottom: "40px"
-      }}>
-        <h1 style={{ fontSize: "3rem", margin: "0" }}>Find Your Dream Job</h1>
+    <div>
+      <div className="hero-section">
+        <h1 style={{ fontSize: "2.5rem", marginBottom: "15px" }}>Find Your Dream Job</h1>
         <p style={{ fontSize: "1.2rem", opacity: "0.9" }}>Browse thousands of job openings from top companies.</p>
         
         <form onSubmit={handleSearch} style={{ marginTop: "30px", display: "flex", justifyContent: "center", gap: "10px", flexWrap: "wrap" }}>
           <input 
-            placeholder="Job Title (e.g. React Developer)" 
+            placeholder="Job Title..." 
             value={search.keyword}
             onChange={(e) => setSearch({...search, keyword: e.target.value})}
-            style={{ padding: "15px", width: "300px", borderRadius: "5px", border: "none" }}
+            style={{ width: "250px", margin: "0" }}
           />
           <input 
-            placeholder="Location (e.g. New York)" 
+            placeholder="Location..." 
             value={search.location}
             onChange={(e) => setSearch({...search, location: e.target.value})}
-            style={{ padding: "15px", width: "200px", borderRadius: "5px", border: "none" }}
+            style={{ width: "200px", margin: "0" }}
           />
-          <button type="submit" style={{ padding: "15px 30px", background: "#ffc107", color: "#333", border: "none", fontWeight: "bold", cursor: "pointer", borderRadius: "5px" }}>
+          <button type="submit" style={{ width: "auto", background: "#ffc107", color: "#333", margin: "0" }}>
             Search Jobs
           </button>
         </form>
+
+        <div style={{ marginTop: "40px", display: "flex", justifyContent: "center", gap: "20px" }}>
+          <button 
+            onClick={() => navigate("/register", { state: { role: "candidate" } })}
+            style={{ width: "auto", background: "white", color: "#007bff", padding: "12px 30px", border: "none" }}
+          >
+            I'm a Job Seeker
+          </button>
+          <button 
+            onClick={() => navigate("/register", { state: { role: "employer" } })}
+            style={{ width: "auto", background: "transparent", border: "2px solid white", color: "white", padding: "12px 30px" }}
+          >
+            I'm an Employer
+          </button>
+        </div>
       </div>
 
-      <div className="container" style={{ width: "800px", margin: "0 auto" }}>
+      <div>
         <h2 style={{ color: "#333", marginBottom: "20px" }}>🔥 Featured Jobs</h2>
         
-        <div style={{ display: "grid", gap: "15px", textAlign: "left" }}>
+        <div className="job-grid">
           {featuredJobs.map((job) => (
-            <div key={job._id} style={{ 
-              border: "1px solid #ddd", 
-              padding: "20px", 
-              borderRadius: "8px", 
-              background: "#fff",
-              boxShadow: "0 2px 5px rgba(0,0,0,0.05)"
-            }}>
+            <div key={job._id} className="card">
               <h3 style={{ margin: "0 0 5px 0", color: "#007bff" }}>{job.title}</h3>
-              <p style={{ margin: "5px 0" }}>{job.company} • {job.location}</p>
+              <p style={{ margin: "5px 0", color: "#666" }}>{job.company} • {job.location}</p>
               <button 
                 onClick={() => navigate("/login")} 
-                style={{ marginTop: "10px", background: "none", color: "#007bff", border: "1px solid #007bff", padding: "5px 15px" }}
+                style={{ marginTop: "15px", background: "transparent", color: "#007bff", border: "1px solid #007bff" }}
               >
                 Login to Apply
               </button>
@@ -79,7 +82,6 @@ function Home() {
           ))}
         </div>
       </div>
-
     </div>
   );
 }

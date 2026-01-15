@@ -31,7 +31,6 @@ function JobDetails() {
       return;
     }
 
-    // REQUIRED: Use FormData for file uploads
     const formData = new FormData();
     formData.append("resume", resume);
 
@@ -49,26 +48,29 @@ function JobDetails() {
   if (!job) return <div>Loading...</div>;
 
   return (
-    <div className="container" style={{ width: "600px", textAlign: "left" }}>
-      <button onClick={() => navigate(-1)} style={{ width: "auto", background: "#6c757d", marginBottom: "20px" }}>← Back</button>
+    <div style={{ maxWidth: "800px", margin: "0 auto" }}>
+      <button onClick={() => navigate(-1)} style={{ width: "auto", background: "#6c757d", color: "white", marginBottom: "20px" }}>← Back</button>
       
-      <h2 style={{ color: "#007bff" }}>{job.title}</h2>
-      <h4 style={{ color: "#555" }}>at {job.company}</h4>
-      
-      <div style={{ background: "#f1f3f5", padding: "15px", borderRadius: "8px", margin: "20px 0" }}>
-        <p><strong>📍 Location:</strong> {job.location}</p>
-        <p><strong>💰 Salary:</strong> {job.salary}</p>
-        <p><strong>🕒 Type:</strong> {job.type}</p>
-        <hr style={{ border: "1px solid #ddd" }} />
-        <p style={{ whiteSpace: "pre-line" }}>{job.description}</p>
+      <div className="card" style={{ marginBottom: "20px" }}>
+          <h2 style={{ color: "#007bff" }}>{job.title}</h2>
+          <h4 style={{ color: "#555", marginBottom: "15px" }}>at {job.company}</h4>
+          
+          <div style={{ background: "#f8f9fa", padding: "15px", borderRadius: "8px", marginBottom: "15px" }}>
+              <p><strong>📍 Location:</strong> {job.location}</p>
+              <p><strong>💰 Salary:</strong> {job.salary}</p>
+              <p><strong>🕒 Type:</strong> {job.type}</p>
+          </div>
+          
+          <hr style={{ border: "0", borderTop: "1px solid #eee", margin: "20px 0" }} />
+          <p style={{ whiteSpace: "pre-line", lineHeight: "1.8" }}>{job.description}</p>
       </div>
 
-      <div style={{ border: "2px dashed #007bff", padding: "20px", borderRadius: "8px", textAlign: "center" }}>
+      <div className="card" style={{ textAlign: "center", border: "2px dashed #007bff" }}>
         <h3>Ready to Apply?</h3>
-        <p>Upload your Resume (PDF only)</p>
+        <p style={{marginBottom: "15px"}}>Upload your Resume (PDF only)</p>
         <form onSubmit={handleApply}>
             <input type="file" accept=".pdf" onChange={handleFileChange} required />
-            <button type="submit" style={{ marginTop: "10px", background: "#007bff" }}>
+            <button type="submit" style={{ marginTop: "10px", background: "#007bff", color: "white" }}>
                 Submit Application
             </button>
         </form>
