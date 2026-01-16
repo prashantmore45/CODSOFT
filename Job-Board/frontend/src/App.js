@@ -15,6 +15,8 @@ import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import MyApplications from "./pages/MyApplications"; 
 import ProtectedRoute from "./components/ProtectedRoute";
+import EditJob from "./pages/EditJob";
+
 
 
 function App() {
@@ -36,6 +38,7 @@ function App() {
             <Route path="/applications/:jobId" element={<ProtectedRoute><ApplicationsList /></ProtectedRoute>} />
             <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
             <Route path="/my-applications" element={<ProtectedRoute><MyApplications /></ProtectedRoute>} />
+            <Route path="/edit-job/:id" element={<ProtectedRoute><EditJob /></ProtectedRoute>} />
           </Routes>
         </div>
 
