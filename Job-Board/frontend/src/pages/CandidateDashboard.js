@@ -6,14 +6,16 @@ function CandidateDashboard() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [jobs, setJobs] = useState([]);
+  const [search, setSearch] = useState({ 
+    keyword: searchParams.get("keyword") || "", 
+    location: searchParams.get("location") || "" 
+  });
 
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-
         const keyword = searchParams.get("keyword") || "";
         const location = searchParams.get("location") || "";
-
         const res = await API.get(`/jobs?keyword=${keyword}&location=${location}`);
         setJobs(res.data);
       } catch (error) {
@@ -23,11 +25,20 @@ function CandidateDashboard() {
     fetchJobs();
   }, [searchParams]);
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    navigate(`/candidate-dashboard?keyword=${search.keyword}&location=${search.location}`);
+  };
+
+  const handleClear = () => {
+    setSearch({ keyword: "", location: "" });
+    navigate("/candidate-dashboard");
+  };
+
   return (
     <div>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
         <h2>Job Feed</h2>
-        
         <button 
           onClick={() => navigate("/my-applications")} 
           style={{ width: "auto", background: "#17a2b8", color: "white", padding: "10px 20px" }}
@@ -36,11 +47,41 @@ function CandidateDashboard() {
         </button>
       </div>
 
-      {(searchParams.get("keyword") || searchParams.get("location")) && (
-        <button onClick={() => navigate("/candidate-dashboard")} style={{ width: "auto", marginBottom: "20px", background: "#6c757d", color: "white" }}>
-          ❌ Clear Search Filters
-        </button>
-      )}
+      <div style={{ 
+        background: "white", 
+        padding: "15px", 
+        borderRadius: "8px", 
+        marginBottom: "20px", 
+        boxShadow: "0 2px 4px rgba(0,0,0,0.05)"
+      }}>
+        <form onSubmit={handleSearch} style={{ display: "flex", gap: "10px", flexWrap: "wrap", alignItems: "center" }}>
+          <input 
+            placeholder="Job Title (e.g. React)..." 
+            value={search.keyword}
+            onChange={(e) => setSearch({...search, keyword: e.target.value})}
+            style={{ flex: 1, margin: 0, minWidth: "200px" }}
+          />
+          <input 
+            placeholder="Location (e.g. Remote)..." 
+            value={search.location}
+            onChange={(e) => setSearch({...search, location: e.target.value})}
+            style={{ flex: 1, margin: 0, minWidth: "150px" }}
+          />
+          <button type="submit" style={{ width: "auto", margin: 0, background: "#ffc107", color: "black" }}>
+            🔍 Search
+          </button>
+          
+          {(searchParams.get("keyword") || searchParams.get("location")) && (
+            <button 
+              type="button" 
+              onClick={handleClear} 
+              style={{ width: "auto", margin: 0, background: "#6c757d", color: "white" }}
+            >
+              ❌ Clear
+            </button>
+          )}
+        </form>
+      </div>
 
       {jobs.length === 0 ? <p>No jobs found matching your search.</p> : null}
 
