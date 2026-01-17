@@ -19,6 +19,20 @@ function ApplicationsList() {
     fetchApplications();
   }, [jobId]);
 
+  // ✅ New Function to handle status updates
+  const handleStatus = async (appId, newStatus) => {
+    try {
+      await API.put(`/application/${appId}/status`, { status: newStatus });
+      alert(`Candidate marked as ${newStatus}`);
+      
+      setApplications((prev) => 
+        prev.map((app) => app._id === appId ? { ...app, status: newStatus } : app)
+      );
+    } catch (error) {
+      alert("Failed to update status");
+    }
+  };
+
   return (
     <div>
       <button onClick={() => navigate("/employer-dashboard")} style={{ background: "#6c757d", color: "white", width: "auto", marginBottom: "20px" }}>← Back to Dashboard</button>
@@ -31,29 +45,56 @@ function ApplicationsList() {
         {applications.map((app) => (
           <div key={app._id} className="card">
             <div>
-              <h3 style={{ margin: "0", color: "#333" }}>{app.applicant.name}</h3>
-              <p style={{ margin: "5px 0", color: "#666" }}>{app.applicant.email}</p>
-              <small style={{ color: "#999" }}>Applied: {new Date(app.createdAt).toLocaleDateString()}</small>
+              {/* 🛡️ FIX: Check if applicant exists before accessing .name */}
+              <h3 style={{ margin: "0", color: "#333" }}>
+                {app.applicant ? app.applicant.name : "Unknown Candidate (Deleted User)"}
+              </h3>
+              <p style={{ margin: "5px 0", color: "#666" }}>
+                {app.applicant ? app.applicant.email : "No Email Available"}
+              </p>
+              
+              <p style={{ fontWeight: "bold", marginTop: "5px" }}>
+                Status: <span style={{ 
+                  color: app.status === "accepted" ? "green" : app.status === "rejected" ? "red" : "#d39e00" 
+                }}>
+                  {app.status.toUpperCase()}
+                </span>
+              </p>
             </div>
 
-            <a 
-              href={`http://localhost:5000/${app.resume.replace(/\\/g, "/")}`} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              style={{
-                display: "block",
-                textAlign: "center",
-                marginTop: "15px",
-                textDecoration: "none",
-                background: "#007bff",
-                color: "white",
-                padding: "10px",
-                borderRadius: "5px",
-                fontWeight: "bold"
-              }}
-            >
-              📄 Download Resume
-            </a>
+            <div style={{ marginTop: "15px", display: "flex", flexDirection: "column", gap: "10px" }}>
+              <a 
+                href={`${process.env.REACT_APP_API_URL || "http://localhost:5000"}/${app.resume.replace(/\\/g, "/")}`} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{
+                  textDecoration: "none",
+                  background: "#007bff",
+                  color: "white",
+                  padding: "8px",
+                  borderRadius: "5px",
+                  textAlign: "center",
+                  fontWeight: "bold"
+                }}
+              >
+                📄 Download Resume
+              </a>
+
+              <div style={{ display: "flex", gap: "10px" }}>
+                <button 
+                  onClick={() => handleStatus(app._id, "accepted")}
+                  style={{ background: "#28a745", color: "white", flex: 1 }}
+                >
+                  ✅ Accept
+                </button>
+                <button 
+                  onClick={() => handleStatus(app._id, "rejected")}
+                  style={{ background: "#dc3545", color: "white", flex: 1 }}
+                >
+                  ❌ Reject
+                </button>
+              </div>
+            </div>
           </div>
         ))}
       </div>

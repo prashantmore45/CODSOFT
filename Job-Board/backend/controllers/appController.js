@@ -75,4 +75,28 @@ const getMyApplications = async (req, res) => {
   }
 };
 
-module.exports = { applyForJob, getJobApplications, getMyApplications };
+
+/* Update application status (Employer only) &  @route PUT /api/application/:id/status */
+
+const updateApplicationStatus = async (req, res) => {
+  try {
+    const { status } = req.body; 
+    
+    const application = await Application.findById(req.params.id);
+    
+    if (!application) {
+      return res.status(404).json({ message: "Application not found" });
+    }
+
+    application.status = status;
+    await application.save();
+
+    res.json({ message: `Application marked as ${status}`, application });
+  } catch (error) {
+    console.error("❌ STATUS UPDATE ERROR:", error.message);
+    res.status(500).json({ message: "Server Error" });
+  }
+};
+
+
+module.exports = { applyForJob, getJobApplications, getMyApplications, updateApplicationStatus };
