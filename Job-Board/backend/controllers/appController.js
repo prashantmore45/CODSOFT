@@ -34,7 +34,7 @@ const applyForJob = async (req, res) => {
       const subject = `New Application for ${jobDetails.title}`;
       const message = `Hello ${jobDetails.postedBy.name},\n\nA new candidate (${req.user.name}) has just applied for your job post: "${jobDetails.title}".\n\nLogin to your dashboard to review their resume.\n\nBest,\nJob Board Team`;
 
-      sendEmail(employerEmail, subject, message);
+      await sendEmail(employerEmail, subject, message);
     }
 
     res.status(201).json({ message: "Application successful", application });

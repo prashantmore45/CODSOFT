@@ -64,7 +64,7 @@ function ApplicationsList() {
 
             <div style={{ marginTop: "15px", display: "flex", flexDirection: "column", gap: "10px" }}>
               <a 
-                href={`${process.env.REACT_APP_API_URL || "http://localhost:5000"}/${app.resume.replace(/\\/g, "/")}`} 
+                href={`${(process.env.REACT_APP_BACKEND_URL || "http://localhost:5000").replace(/\/$/, "")}/${app.resume.replace(/\\/g, "/")}`} 
                 target="_blank" 
                 rel="noopener noreferrer"
                 style={{
