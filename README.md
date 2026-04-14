@@ -4,37 +4,7 @@ This repository contains the tasks completed as part of the **CodSoft Web Develo
 
 > **Note (2026-04-14):** The project code has been moved to separate repositories. This repository is now maintained mainly to **showcase internship completion details**.
 
-## ￯
-y
-## ￯
-y
-## ￯
-y
-## ￯
-y
-## ￯
-y
-
-## ￯
-y
-
-## ￯
-y
-
-## ￯
-y
-
-## ￯
-y
-
-## ￯
-y
-
-## ￯
-y
-
-## ￯
-y
+## 
 
 ## Internship Details
 - Intern Name: Prashant Maruti More
