@@ -1,5 +1,10 @@
 # 🚀 Level 2 Task: Job Board Application
 
+> **Important (2026-04-14):** This folder is kept as an **internship snapshot** only.  
+> The actively maintained project has moved to: https://github.com/prashantmore45/job-board-web-app  
+>
+> Deployments were disconnected from this repository and are now handled from the new repository (Render for backend, Vercel for frontend).
+
 A robust recruitment platform built with the **MERN Stack** (MongoDB, Express.js, React, Node.js). This application facilitates the hiring process by connecting Employers with Candidates through a feature-rich interface.
 
 🔴 **Live Demo:** [Insert Your Vercel Link Here]  
@@ -25,7 +30,6 @@ A robust recruitment platform built with the **MERN Stack** (MongoDB, Express.js
 - **File Handling:** Server-side file upload handling using **Multer**.
 
 ## 🛠️ Tech Stack
-
 - **Frontend:** React.js, React Router, Context API, CSS3
 - **Backend:** Node.js, Express.js
 - **Database:** MongoDB Atlas
@@ -41,14 +45,13 @@ cd backend
 npm install
 # Create .env file with MONGO_URI, JWT_SECRET, EMAIL_USER, EMAIL_PASS
 npm start
-
 ```
-3. **Frontend Setup**
-```Bash
 
+3. **Frontend Setup**
+```bash
 cd frontend
 npm install
 npm start
-
 ```
+
 ### 📸 Screenshots
